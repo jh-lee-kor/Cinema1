@@ -410,7 +410,7 @@ void Reservation::payment(Database& db) {
 	cout << endl;
 	cout << "상영관 : " << db.prodb[(db.getbusiday() - 1)][sel_programnum].gettheater() << " | " << db.prodb[(db.getbusiday() - 1)][sel_programnum].getstime() << "시 시작" << endl;
 	cout << endl;
-	cout << (char)(sel_row + 65) << (char)(sel_col + 48) << " 좌석 | " << db.ticket << "원" << " 포인트 | " << db.ticket/(db.pointratio*100) << " P 적립" << endl;
+	cout << (char)(sel_row + 65) << (char)(sel_col + 48) << " 좌석 | " << db.ticket << "원 | " << " 포인트 | " << db.ticket/(db.pointratio*100) << " P 적립" << endl;
 	cout << "-------------------------------------------------" << endl;
 	cout << "| 1. 확인             | 2. 취소                 |" << endl;
 	cout << "-------------------------------------------------" << endl;
@@ -432,7 +432,7 @@ void Reservation::payment(Database& db) {
 			cout << endl;
 			cout << "상영관 : " << db.prodb[(db.getbusiday() - 1)][sel_programnum].gettheater() << " | " << db.prodb[(db.getbusiday() - 1)][sel_programnum].getstime() << "시 시작" << endl;
 			cout << endl;
-			cout << (char)(sel_row + 65) << (char)(sel_col + 48) << " 좌석 | " << db.ticket << "원" << " 포인트 | " << point << " P 적립" << endl;
+			cout << (char)(sel_row + 65) << (char)(sel_col + 48) << " 좌석 | " << db.ticket << "원 | " << " 포인트 | " << point << " P 적립" << endl;
 			cout << "현재 포인트 : " << db.ticket / (db.pointratio * 100) << " P" << endl;
 			cout << "-------------------------------------------------" << endl;
 			cout << endl;
