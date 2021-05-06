@@ -34,8 +34,8 @@ void Program::setstime(int t) {
 bool Program::isseatbooked(int row, int col) {
 	return this->seats[row][col].isbooked();
 }
-void Program::bookseat(int row, int col, int userid) {
-	this->seats[row][col].setuser(userid);
+void Program::bookseat(int row, int col, int usernum) {
+	this->seats[row][col].setuser(usernum);
 }
 
 int Program::getseatuser(int row, int col) {

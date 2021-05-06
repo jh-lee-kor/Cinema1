@@ -19,7 +19,7 @@ public:
 	int getstime();
 	void setstime(int t);
 	bool isseatbooked(int row, int col);
-	void bookseat(int row, int col, int userid);
+	void bookseat(int row, int col, int usernum);
 	int getseatuser(int row, int col);
 
 

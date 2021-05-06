@@ -10,7 +10,7 @@ public:
 	
 	bool flag1, flag2, flag3;
 	string sel_name;
-	int sel_userid;
+	int sel_usernum;
 	int sel_movieid;
 	int sel_programnum;
 	int sel_row, sel_col;

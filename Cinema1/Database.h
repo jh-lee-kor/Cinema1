@@ -28,7 +28,10 @@ public:
 	int getuserpoint(int id);
 	void setuserpoint(int id, int point);
 	char getusergender(int id);
-	void signup(std::string name, char gender);
+	void signup(std::string name, std::string id, std::string pw , char gender);
+	int login(std::string id, std::string pw);
+	std::string getuserid(int num);
+	std::string getuserpw(int num);
 	void input_reserv(int day, int pronum, int id, int row, int col);
 
 	const static int ticket;

@@ -48,22 +48,31 @@ void Check::viewncancel(Database& db) {
 	cout << "-------------------------------------------------" << endl;
 	cout << "예매 확인입니다." << endl;
 	cout << endl;
-	cout << "고객님의 회원번호를 입력해주세요." << endl;
-	cout << endl;
-	cout << "회원번호는 가입 당시에 안내드렸습니다." << endl;
 	cout << "-------------------------------------------------" << endl;
-	cout << "입력 : ";
-	int id;
-	cin >> id;
-	if ((id <= 0) || (id > User::totaluser)) { // id값이 회원 목록 범위 밖일경우
+	cout << "회원님의 확인을 위해 아이디를 입력해주십시오." << endl;
+	cout << "-------------------------------------------------" << endl;
+	cout << "ID : ";
+	string id1;
+	cin >> id1;
+	cout << "-------------------------------------------------" << endl;
+	cout << "비밀번호를 입력해주십시오." << endl;
+	cout << "-------------------------------------------------" << endl;
+	cout << "PW : ";
+	string pw1;
+	cin >> pw1;
+
+
+
+	if (db.login(id1, pw1) == 0) {
 		cout << "-------------------------------------------------" << endl;
-		cout << "잘못된 회원번호입니다. 다시 확인해주세요." << endl;
+		cout << "잘못된 ID 혹은 비밀번호입니다. 다시 확인해주세요." << endl;
 		cout << endl;
 		cout << "처음 화면으로 돌아갑니다." << endl;
 		cout << "-------------------------------------------------" << endl;
 	}
 	else {
-		string name = db.getusername(id);
+		int sel_usernum = db.login(id1, pw1);
+		string name = db.getusername(sel_usernum);
 		cout << "-------------------------------------------------" << endl;
 		cout << name << "님, 환영합니다." << endl;
 		cout << "-------------------------------------------------" << endl;
@@ -75,7 +84,7 @@ void Check::viewncancel(Database& db) {
 		for (int p = 0; p < 40; p++)
 			for (int r = 0; r < 8; r++)
 				for (int c = 0; c < 8; c++)
-					if (db.prodb[today][p].getseatuser(r, c) == id) {
+					if (db.prodb[today][p].getseatuser(r, c) == sel_usernum) {
 						darr[here][0] = today;
 						darr[here][1] = p;
 						darr[here][2] = r;
@@ -127,7 +136,7 @@ void Check::viewncancel(Database& db) {
 						cin >> sel2;
 						if (sel2 == 1) {
 							db.prodb[darr[sel1][0]][darr[sel1][1]].bookseat(darr[sel1][2], darr[sel1][3], 0); // 좌석 환원 
-							db.setuserpoint(id, db.getuserpoint(id) - (db.ticket / (100 * db.pointratio))); // 유저 포인트 - 적립포인트
+							db.setuserpoint(sel_usernum, db.getuserpoint(sel_usernum) - (db.ticket / (100 * db.pointratio))); // 유저 포인트 - 적립포인트
 
 							cout << "-------------------------------------------------" << endl;
 							cout << "예매가 취소되었습니다." << endl;
@@ -138,7 +147,7 @@ void Check::viewncancel(Database& db) {
 							cout << "-------------------------------------------------" << endl;
 							cout << "환불 금액 : " << db.ticket << "원" << endl;
 							cout << endl;
-							cout << "잔여 포인트 : " << db.getuserpoint(id) << "P" << endl;
+							cout << "잔여 포인트 : " << db.getuserpoint(sel_usernum) << "P" << endl;
 							cout << "-------------------------------------------------" << endl;
 							break;
 						}
@@ -161,7 +170,7 @@ void Check::viewncancel(Database& db) {
 				}
 			}
 		}
-			
+
 	}
 }
 

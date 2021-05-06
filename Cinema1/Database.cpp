@@ -43,45 +43,45 @@ void Database::load_moviedb() {
 
 void Database::load_userdb() {
 	//사용자 목록 불러오기
-	userdb[0].input_user("고길동", 'M');
+	userdb[0].input_user("고길동", "admin", "admin", 'M');
 	userdb[0].setPoint(6000);
-	userdb[1].input_user("또치", 'F');
+	userdb[1].input_user("또치", "abc123" , "password" ,'F');
 	userdb[1].setPoint(200);
-	userdb[2].input_user("둘리", 'M');
+	userdb[2].input_user("둘리", "asdf69", "password" ,'M');
 	userdb[2].setPoint(100);
-	userdb[3].input_user("도우너", 'M');
+	userdb[3].input_user("도우너", "qre156", "password", 'M');
 	userdb[3].setPoint(110);
-	userdb[4].input_user("둘리엄마", 'F');
+	userdb[4].input_user("둘리엄마", "asdf489", "password", 'F');
 	userdb[4].setPoint(5000);
-	userdb[5].input_user("희동이", 'M');
+	userdb[5].input_user("희동이", "bf15df9", "password", 'M');
 	userdb[5].setPoint(10000);
-	userdb[6].input_user("뽀로로", 'M');
+	userdb[6].input_user("뽀로로", "sadf812", "password", 'M');
 	userdb[6].setPoint(9000);
-	userdb[7].input_user("루피", 'F');
+	userdb[7].input_user("루피", "afsd8421", "password", 'F');
 	userdb[7].setPoint(500);
-	userdb[8].input_user("패티", 'F');
+	userdb[8].input_user("패티", "e899e", "password", 'F');
 	userdb[8].setPoint(1000);
-	userdb[9].input_user("포비", 'M');
+	userdb[9].input_user("포비", "qwy9i9hg2", "password", 'M');
 	userdb[9].setPoint(50);
-	userdb[10].input_user("홍길동", 'M');
+	userdb[10].input_user("홍길동", "fd15fd15", "password", 'M');
 	userdb[10].setPoint(6000);
-	userdb[11].input_user("호형호제", 'F');
+	userdb[11].input_user("호형호제", "sdf1561", "password", 'F');
 	userdb[11].setPoint(200);
-	userdb[12].input_user("카레", 'M');
+	userdb[12].input_user("카레", "sdf9911dsf", "password", 'M');
 	userdb[12].setPoint(100);
-	userdb[13].input_user("짜장", 'M');
+	userdb[13].input_user("짜장", "sfd41561", "password", 'M');
 	userdb[13].setPoint(110);
-	userdb[14].input_user("짬뽕", 'F');
+	userdb[14].input_user("짬뽕", "zvc651", "password", 'F');
 	userdb[14].setPoint(5000);
-	userdb[15].input_user("유희왕", 'F');
+	userdb[15].input_user("유희왕", "qwre489", "password", 'F');
 	userdb[15].setPoint(10000);
-	userdb[16].input_user("콩밥", 'M');
+	userdb[16].input_user("콩밥", "kj1h6", "password", 'M');
 	userdb[16].setPoint(120);
-	userdb[17].input_user("해커", 'F');
+	userdb[17].input_user("해커", "fjh615", "password", 'F');
 	userdb[17].setPoint(0);
-	userdb[18].input_user("피카소", 'F');
+	userdb[18].input_user("피카소", "fjh61", "password", 'F');
 	userdb[18].setPoint(0);
-	userdb[19].input_user("샌즈", 'M');
+	userdb[19].input_user("샌즈", "fjgh615", "password", 'M');
 	userdb[19].setPoint(0);
 }
 
@@ -170,8 +170,31 @@ char Database::getusergender(int id) {
 	return userdb[id - 1].getGender();
 }
 
-void Database::signup(std::string name, char gender) {
-	userdb[User::totaluser].input_user(name, gender);
+std::string Database::getuserid(int num) {
+	return userdb[num - 1].getID();
+}
+
+std::string Database::getuserpw(int num) {
+	return userdb[num - 1].getPW();
+}
+
+void Database::signup(std::string name, std::string id, std::string pw, char gender) {
+	userdb[User::totaluser].input_user(name, id, pw, gender);
+}
+
+int Database::login(std::string id, std::string pw) {
+	int i = 0;
+	while (i<User::totaluser) {
+		if (userdb[i].getID() == id)
+			break;
+		i++;
+	}
+	if (i == User::totaluser)
+		return 0;
+	else if (userdb[i].getPW() == pw)
+		return userdb[i].getusernum();
+	else
+		return 0;
 }
 
 void Database::input_reserv(int day, int pronum, int id, int row, int col) { // 데이터베이스에 과거의 예매 정보를 입력

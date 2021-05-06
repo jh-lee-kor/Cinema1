@@ -4,8 +4,8 @@ int Seat::getuser() {
 	return this->seatuser;
 }
 
-void Seat::setuser(int userid) {
-	this->seatuser = userid;
+void Seat::setuser(int usernum) {
+	this->seatuser = usernum;
 }
 
 bool Seat::isbooked() {

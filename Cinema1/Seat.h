@@ -6,7 +6,7 @@ class Seat {
 
 public:
 	int getuser();
-	void setuser(int userid);
+	void setuser(int usernum);
 	bool isbooked();
 };
 

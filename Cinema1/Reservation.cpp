@@ -38,28 +38,36 @@ void Reservation::user_check(Database & db) {
 	if (select == 1) {
 		cout << endl;
 		cout << "-------------------------------------------------" << endl;
-		cout << "회원님의 확인을 위해 회원번호를 입력해주십시오." << endl;
+		cout << "회원님의 확인을 위해 아이디를 입력해주십시오." << endl;
 		cout << "-------------------------------------------------" << endl;
-		cout << "입력 : ";
-		int id;
-		cin >> id;
-		if ((id <= 0) || (id > User::totaluser)) { // id값이 회원 목록 범위 밖일경우
-			cout << "-------------------------------------------------" << endl;
-			cout << "잘못된 회원번호입니다. 다시 확인해주세요." << endl;
-			cout << endl;
-			cout << "처음 화면으로 돌아갑니다." << endl;
-			cout << "-------------------------------------------------" << endl;
-		}
-		else {
-			string name = db.getusername(id);
+		cout << "ID : ";
+		string id1;
+		cin >> id1;
+		cout << "-------------------------------------------------" << endl;
+		cout << "비밀번호를 입력해주십시오." << endl;
+		cout << "-------------------------------------------------" << endl;
+		cout << "PW : ";
+		string pw1;
+		cin >> pw1;
+
+
+
+		if (db.login(id1, pw1) != 0) { 
+			sel_usernum = db.login(id1, pw1);
+			string name = db.getusername(sel_usernum);
 			cout << "-------------------------------------------------" << endl;
 			cout << name << "님, 환영합니다." << endl;
 			cout << "-------------------------------------------------" << endl;
 			sel_name = name;
-			sel_userid = id;
 			flag1 = true;
 		}
-		// 비밀번호 입력? 자세한 로그인 시간나면 만들자
+		else {
+			cout << "-------------------------------------------------" << endl;
+			cout << "잘못된 ID 혹은 비밀번호입니다. 다시 확인해주세요." << endl;
+			cout << endl;
+			cout << "처음 화면으로 돌아갑니다." << endl;
+			cout << "-------------------------------------------------" << endl;
+		}
 		
 	}
 	else if (select == 2) {
@@ -92,9 +100,35 @@ void Reservation::user_check(Database & db) {
 			}	
 		}
 		cout << "-------------------------------------------------" << endl;
+		cout << "회원님의 아이디를 입력해주세요." << endl;
+		string nid;
+		while (true) {
+			cout << "-------------------------------------------------" << endl;
+			cout << "입력 : ";
+			cin >> nid;
+			int i = 0;
+			while (i < User::totaluser) {
+				if (db.getuserid(i) == nid)
+					break;
+				i++;
+			}
+			if (i == User::totaluser)
+				break;
+			else
+				cout << "이미 등록된 아이디입니다." << endl;
+		}
+		cout << "-------------------------------------------------" << endl;
+		cout << "회원님의 비밀번호를 입력해주세요." << endl;
+		cout << "-------------------------------------------------" << endl;
+		cout << "입력 : ";
+		string npw;
+		cin >> npw;
+		cout << "-------------------------------------------------" << endl;
 		cout << "회원 정보를 확인해주세요." << endl;
 		cout << "-------------------------------------------------" << endl;
 		cout << "이름 : " << name << " | 성별 : "<< gen <<  endl;
+		cout << endl;
+		cout << "ID   : " << nid << " | PW   : " << npw << endl;
 		cout << "-------------------------------------------------" << endl;
 		cout << "정보가 맞으시면 확인을, 틀린 점이 있다면 취소를 눌러주세요." << endl;
 		cout << "-------------------------------------------------" << endl;
@@ -105,15 +139,13 @@ void Reservation::user_check(Database & db) {
 		while (true) {
 			cin >> sel2;
 			if (sel2 == 1) {
-				db.signup(name, gen);
+				db.signup(name, nid, npw, gen);
 				sel_name = name;
-				sel_userid = User::totaluser;
+				sel_usernum = User::totaluser;
 				flag1 = true;
 
 				cout << "-------------------------------------------------" << endl;
 				cout << name << "회원님 환영합니다." << endl;
-				cout << endl;
-				cout << name << "회원님의 회원번호는 " << sel_userid << " 입니다. 꼭 기억해주세요." << endl;
 				cout << endl;
 				cout << "ABC시네마와 함께 좋은 시간 되시길 바랍니다." << endl;
 				cout << "-------------------------------------------------" << endl;
@@ -389,8 +421,8 @@ void Reservation::payment(Database& db) {
 		if (sel2 == 1) {
 			money -= db.ticket;
 			int point = db.ticket / (db.pointratio * 100);
-			db.prodb[(db.getbusiday()-1)][sel_programnum].bookseat(sel_row, sel_col, sel_userid);
-			db.setuserpoint(sel_userid, db.getuserpoint(sel_userid) + point);
+			db.prodb[(db.getbusiday()-1)][sel_programnum].bookseat(sel_row, sel_col, sel_usernum);
+			db.setuserpoint(sel_usernum, db.getuserpoint(sel_usernum) + point);
 			
 
 			cout << "-------------------------------------------------" << endl;
