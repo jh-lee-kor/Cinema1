@@ -177,28 +177,37 @@ void Check::viewncancel(Database& db) {
 
 void Check::pointcheck(Database& db) {
 	cout << "-------------------------------------------------" << endl;
-	cout << "포인트 확인입니다." << endl;
+	cout << "예매 확인입니다." << endl;
 	cout << endl;
-	cout << "고객님의 회원번호를 입력해주세요." << endl;
-	cout << endl;
-	cout << "회원번호는 가입 당시에 안내드렸습니다." << endl;
 	cout << "-------------------------------------------------" << endl;
-	cout << "입력 : ";
-	int id;
-	cin >> id;
-	if ((id <= 0) || (id > User::totaluser)) { // id값이 회원 목록 범위 밖일경우
+	cout << "회원님의 확인을 위해 아이디를 입력해주십시오." << endl;
+	cout << "-------------------------------------------------" << endl;
+	cout << "ID : ";
+	string id1;
+	cin >> id1;
+	cout << "-------------------------------------------------" << endl;
+	cout << "비밀번호를 입력해주십시오." << endl;
+	cout << "-------------------------------------------------" << endl;
+	cout << "PW : ";
+	string pw1;
+	cin >> pw1;
+
+
+
+	if (db.login(id1, pw1) == 0) {
 		cout << "-------------------------------------------------" << endl;
-		cout << "잘못된 회원번호입니다. 다시 확인해주세요." << endl;
+		cout << "잘못된 ID 혹은 비밀번호입니다. 다시 확인해주세요." << endl;
 		cout << endl;
 		cout << "처음 화면으로 돌아갑니다." << endl;
 		cout << "-------------------------------------------------" << endl;
 	}
 	else {
-		string name = db.getusername(id);
+		int sel_usernum = db.login(id1, pw1);
+		string name = db.getusername(sel_usernum);
 		cout << "-------------------------------------------------" << endl;
 		cout << name << "님, 환영합니다." << endl;
 		cout << "-------------------------------------------------" << endl;
-		cout << "잔여 포인트는 " << db.getuserpoint(id) << "P 입니다." << endl;
+		cout << "잔여 포인트는 " << db.getuserpoint(sel_usernum) << "P 입니다." << endl;
 		cout << "-------------------------------------------------" << endl;
 	}
 }
